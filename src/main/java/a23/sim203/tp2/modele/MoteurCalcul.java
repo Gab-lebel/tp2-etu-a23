@@ -1,5 +1,6 @@
 package a23.sim203.tp2.modele;
 
+import javafx.scene.control.Alert;
 import org.mariuszgromada.math.mxparser.*;
 
 import java.util.*;
@@ -7,12 +8,17 @@ import java.util.*;
 public class MoteurCalcul {
 
     // ajoutez les attributs pour stocker les équations et les variables
+    Set<Equation> equationsHashSet;
+    Map<String, Double> variablesHashMap;
 
 
 
 
     public MoteurCalcul() {
         License.iConfirmNonCommercialUse("Cegep Limoilou");
+
+        equationsHashSet = new HashSet<>();
+        variablesHashMap = new HashMap<>();
     }
 
 
@@ -26,13 +32,23 @@ public class MoteurCalcul {
     }
 
     public void setValeurVariable(String nomVariable, double valeur) {
-
+        variablesHashMap.replace(nomVariable, valeur);
     }
 
 
     public void ajouteEquation(String nouvelleEquation) {
-
-
+        int indexEquals = nouvelleEquation.indexOf('=');
+        String nomEquation = nouvelleEquation.substring(0, indexEquals);
+        String expression = nouvelleEquation.substring(indexEquals + 1);
+        try {
+            Equation equation = new Equation(nomEquation, expression);
+        } catch (RuntimeException e) {
+            if (Objects.equals(e.getMessage(), "Mauvais nom")) {
+                showAlertEquationNonValide();
+            } else {
+                throw e;
+            }
+        }
     }
 
 
@@ -78,6 +94,12 @@ public class MoteurCalcul {
 
         return null; // à changer
 
+    }
+
+    private void showAlertEquationNonValide() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setContentText("Équation non valide");
+        alert.setTitle("Calculateur avancé");
     }
 
     public static void main(String[] args) {
