@@ -1,6 +1,7 @@
 package a23.sim203.tp2.controller;
 
 import a23.sim203.tp2.modele.MoteurCalcul;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
@@ -17,7 +18,7 @@ import javafx.scene.layout.VBox;
 
 public class CalculatriceController {
 
-    private MoteurCalcul moteurCalcul = new MoteurCalcul();
+    private MoteurCalcul moteurCalcul= new MoteurCalcul();
 
     @FXML
     private BorderPane BorderPane;
@@ -142,5 +143,76 @@ public class CalculatriceController {
     @FXML
     private Button zeroButton;
 
+    @FXML
+    void ajoutajouterCaracterePlus(ActionEvent event) {
+        affichageTextField.setText(affichageTextField.getText() + "1");
+    }
+
+    @FXML
+    void ajouterCaractere1(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ajouterCaractere2(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ajouterCaractere3(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ajouterCaractere4(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ajouterCaractere5(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ajouterCaractere6(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ajouterCaractere7(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ajouterCaractere8(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ajouterCaractere9(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ajouterCaractereDiviser(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ajouterCaractereEgal(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ajouterCaractereFois(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ajouterCaractereMoin(ActionEvent event) {
+
+    }
+
 }
+
 

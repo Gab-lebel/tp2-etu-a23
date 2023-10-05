@@ -9,6 +9,8 @@ public class MoteurCalcul {
     // ajoutez les attributs pour stocker les équations et les variables
 
 
+
+
     public MoteurCalcul() {
         License.iConfirmNonCommercialUse("Cegep Limoilou");
     }
@@ -16,8 +18,7 @@ public class MoteurCalcul {
 
     private Set<String> determineToutesVariablesRequises() {
 
-
-        return null; // à changer
+        return null;
     }
 
     private void ajouteVariable(String variable, double valeur) {
@@ -58,6 +59,7 @@ public class MoteurCalcul {
     }
 
     public Equation getToutesLesEquations() {
+
         return null; // à changer
 
     }
