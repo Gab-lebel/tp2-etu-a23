@@ -18,7 +18,7 @@ import javafx.scene.layout.VBox;
 
 public class CalculatriceController {
 
-    private MoteurCalcul moteurCalcul= new MoteurCalcul();
+    private MoteurCalcul moteurCalcul = new MoteurCalcul();
 
     @FXML
     private BorderPane BorderPane;
@@ -145,74 +145,127 @@ public class CalculatriceController {
 
     @FXML
     void ajoutajouterCaracterePlus(ActionEvent event) {
-        affichageTextField.setText(affichageTextField.getText() + "1");
+        affichageTextField.setText(affichageTextField.getText() + "+");
     }
 
     @FXML
     void ajouterCaractere1(ActionEvent event) {
-
+        affichageTextField.setText(affichageTextField.getText() + "1");
     }
 
     @FXML
     void ajouterCaractere2(ActionEvent event) {
-
+        affichageTextField.setText(affichageTextField.getText() + "2");
     }
 
     @FXML
     void ajouterCaractere3(ActionEvent event) {
-
+        affichageTextField.setText(affichageTextField.getText() + "3");
     }
 
     @FXML
     void ajouterCaractere4(ActionEvent event) {
-
+        affichageTextField.setText(affichageTextField.getText() + "4");
     }
 
     @FXML
     void ajouterCaractere5(ActionEvent event) {
-
+        affichageTextField.setText(affichageTextField.getText() + "5");
     }
 
     @FXML
     void ajouterCaractere6(ActionEvent event) {
-
+        affichageTextField.setText(affichageTextField.getText() + "6");
     }
 
     @FXML
     void ajouterCaractere7(ActionEvent event) {
-
+        affichageTextField.setText(affichageTextField.getText() + "7");
     }
 
     @FXML
     void ajouterCaractere8(ActionEvent event) {
-
+        affichageTextField.setText(affichageTextField.getText() + "8");
     }
 
     @FXML
     void ajouterCaractere9(ActionEvent event) {
-
+        affichageTextField.setText(affichageTextField.getText() + "9");
     }
 
     @FXML
     void ajouterCaractereDiviser(ActionEvent event) {
-
+        affichageTextField.setText(affichageTextField.getText() + "/");
     }
 
     @FXML
     void ajouterCaractereEgal(ActionEvent event) {
-
+        //todo déclencher le dialogue d'erreur
+        moteurCalcul.calcule(affichageTextField.getText());
     }
 
     @FXML
     void ajouterCaractereFois(ActionEvent event) {
-
+        affichageTextField.setText(affichageTextField.getText() + "*");
     }
 
     @FXML
     void ajouterCaractereMoin(ActionEvent event) {
-
+        affichageTextField.setText(affichageTextField.getText() + "-");
     }
 
+    @FXML
+    void ajouterCaractereZero(ActionEvent event) {
+        affichageTextField.setText(affichageTextField.getText() + "0");
+    }
+
+    @FXML
+    void ajouterParentheseDroite(ActionEvent event) {
+        affichageTextField.setText(affichageTextField.getText() + "(");
+    }
+
+    @FXML
+    void ajouterParentheseGauche(ActionEvent event) {
+        affichageTextField.setText(affichageTextField.getText() + ")");
+    }
+
+    @FXML
+    void ajouterUneVirgule(ActionEvent event) {
+        affichageTextField.setText(affichageTextField.getText() + ",");
+    }
+
+    @FXML
+    void changerLeSigne(ActionEvent event) {
+        int i;
+        String avantEgal = null;
+        String apresEgal = null;
+        String signeChangher;
+        i = affichageTextField.getText().indexOf('=');
+        for (int j = 0; j <= i; j++) {
+            avantEgal += affichageTextField.getText().charAt(j);
+        }
+        for (int k = i; k < affichageTextField.getText().length(); k++) {
+            apresEgal += affichageTextField.getText().charAt(k);
+        }
+        if (apresEgal.charAt(0) != '-') {
+            apresEgal.substring(0);
+            signeChangher = "-" + apresEgal;
+        } else {
+            apresEgal.substring(0);
+            signeChangher = "+" + apresEgal;
+        }
+        affichageTextField.setText(avantEgal + signeChangher);
+    }
+
+    @FXML
+    void effacerDernierCaractere(ActionEvent event) {
+        affichageTextField.getText().substring(0,affichageTextField.getText().length() -1);
+    }
+
+    @FXML
+    void effacerToutLesCaractere(ActionEvent event) {
+        affichageTextField.setText("");
+    }
 }
 
 

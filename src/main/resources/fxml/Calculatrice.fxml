@@ -86,10 +86,10 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="parenthèseGaucheButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="(" GridPane.rowIndex="2" />
+            <Button fx:id="parenthèseGaucheButton" mnemonicParsing="false" onAction="#ajouterParentheseDroite" prefHeight="50.0" prefWidth="300.0" text="(" GridPane.rowIndex="2" />
             <Button fx:id="troisButton" mnemonicParsing="false" onAction="#ajouterCaractere3" prefHeight="50.0" prefWidth="300.0" text="3" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <Button fx:id="retierButton" alignment="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: orange;" text="&lt;-" GridPane.columnIndex="3" />
-            <Button fx:id="retierToutButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: darkred;" text="X" GridPane.columnIndex="4" />
+            <Button fx:id="retierButton" alignment="CENTER" mnemonicParsing="false" onAction="#effacerDernierCaractere" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: orange;" text="&lt;-" GridPane.columnIndex="3" />
+            <Button fx:id="retierToutButton" mnemonicParsing="false" onAction="#effacerToutLesCaractere" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: brown;" text="X" GridPane.columnIndex="4" />
             <Button fx:id="diviserButton" mnemonicParsing="false" onAction="#ajouterCaractereDiviser" prefHeight="50.0" prefWidth="300.0" text="/" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" />
             <Button fx:id="foisButton" mnemonicParsing="false" onAction="#ajouterCaractereFois" prefHeight="50.0" prefWidth="300.0" text="*" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="2" />
             <Button fx:id="soustractionButton" mnemonicParsing="false" onAction="#ajouterCaractereMoin" prefHeight="50.0" prefWidth="300.0" text="-" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="3" />
@@ -97,16 +97,16 @@
             <Button fx:id="deuxButton" mnemonicParsing="false" onAction="#ajouterCaractere2" prefHeight="50.0" prefWidth="300.0" text="2" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Button fx:id="egalButton" mnemonicParsing="false" onAction="#ajouterCaractereEgal" prefHeight="73.0" prefWidth="154.0" text="=" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="5" GridPane.rowSpan="2" />
             <Button fx:id="additionnerButton" mnemonicParsing="false" onAction="#ajoutajouterCaracterePlus" prefHeight="50.0" prefWidth="300.0" text="+" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-            <Button fx:id="parentheseDroiteButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text=")" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button fx:id="changementDeSigneButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="+/-" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Button fx:id="parentheseDroiteButton" mnemonicParsing="false" onAction="#ajouterParentheseGauche" prefHeight="50.0" prefWidth="300.0" text=")" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="changementDeSigneButton" mnemonicParsing="false" onAction="#changerLeSigne" prefHeight="50.0" prefWidth="300.0" text="+/-" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Button fx:id="septButton" mnemonicParsing="false" onAction="#ajouterCaractere7" prefHeight="50.0" prefWidth="300.0" text="7" GridPane.rowIndex="3" />
             <Button fx:id="huitButton" mnemonicParsing="false" onAction="#ajouterCaractere8" prefHeight="50.0" prefWidth="300.0" text="8" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Button fx:id="neufButton" mnemonicParsing="false" onAction="#ajouterCaractere9" prefHeight="50.0" prefWidth="300.0" text="9" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <Button fx:id="quatreButton" mnemonicParsing="false" onAction="#ajouterCaractere4" prefHeight="50.0" prefWidth="300.0" text="4" GridPane.rowIndex="4" />
             <Button fx:id="cinqButton" mnemonicParsing="false" onAction="#ajouterCaractere5" prefHeight="50.0" prefWidth="300.0" text="5" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Button fx:id="sixButton" mnemonicParsing="false" onAction="#ajouterCaractere6" prefHeight="50.0" prefWidth="300.0" text="6" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <Button fx:id="zeroButton" mnemonicParsing="false" prefHeight="59.0" prefWidth="153.0" text="0" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-            <Button fx:id="pointButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="." GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Button fx:id="zeroButton" mnemonicParsing="false" onAction="#ajouterCaractereZero" prefHeight="59.0" prefWidth="153.0" text="0" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+            <Button fx:id="pointButton" mnemonicParsing="false" onAction="#ajouterUneVirgule" prefHeight="50.0" prefWidth="300.0" text="." GridPane.columnIndex="2" GridPane.rowIndex="6" />
             <TextField fx:id="affichageTextField" prefHeight="67.0" prefWidth="230.0" style="-fx-background-color: black;" GridPane.columnSpan="3" GridPane.rowSpan="2" />
          </children>
       </GridPane>

@@ -13,10 +13,10 @@ public class CalculatriceApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-//        FXMLLoader loader = new FXMLLoader(this.getClass().getResource());
-//        Parent root = loader.load();
-
-//        primaryStage.setScene(new Scene(root));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/Calculatrice.fxml"));
+        Parent root = loader.load();
+//
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 }
