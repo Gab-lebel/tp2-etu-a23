@@ -10,6 +10,8 @@ public class MoteurCalcul {
     // ajoutez les attributs pour stocker les équations et les variables
     Set<Equation> equationsHashSet;
     Map<String, Double> variablesHashMap;
+    Map<Equation, Set<String>> referencesMap;
+    Set<Constant> variablesSet;
 
 
 
@@ -19,6 +21,8 @@ public class MoteurCalcul {
 
         equationsHashSet = new HashSet<>();
         variablesHashMap = new HashMap<>();
+        referencesMap = new HashMap<>();
+        variablesSet = new HashSet<>();
     }
 
 
@@ -28,7 +32,7 @@ public class MoteurCalcul {
     }
 
     private void ajouteVariable(String variable, double valeur) {
-
+        variablesSet.add(new Constant(variable, valeur));
     }
 
     public void setValeurVariable(String nomVariable, double valeur) {
@@ -42,6 +46,9 @@ public class MoteurCalcul {
         String expression = nouvelleEquation.substring(indexEquals + 1);
         try {
             Equation equation = new Equation(nomEquation, expression);
+            equationsHashSet.add(equation);
+            referencesMap.put(equation, new HashSet<>());
+
         } catch (RuntimeException e) {
             if (Objects.equals(e.getMessage(), "Mauvais nom")) {
                 showAlertEquationNonValide();
@@ -53,8 +60,7 @@ public class MoteurCalcul {
 
 
     public void effaceEquation(String nomEquation) {
-
-
+        equationsHashSet.removeIf((equation) -> equation.getNom().equals(nomEquation));
     }
 
     public double calcule(String nomEquation) {
