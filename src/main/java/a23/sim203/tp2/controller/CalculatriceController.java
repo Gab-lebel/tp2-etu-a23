@@ -234,32 +234,41 @@ public class CalculatriceController {
         affichageTextField.setText(affichageTextField.getText() + ",");
     }
 
+    /**
+     * Change le signe du premier caractère le egal par un moin ou un +, s'il n'y a pas signe la méthode met un -
+     * La méthode sépare la string de affichageTextField en deux soit les carcatere avant le egal,inclus, et tout ce qui a apres le égal
+     * La string signeChanger est la string apresEgal avec le signe changer
+     * Finalement la méthode recrée la string du textField avec avantEgal et signeChanger
+     * @param event
+     */
     @FXML
     void changerLeSigne(ActionEvent event) {
         int i;
-        String avantEgal = null;
-        String apresEgal = null;
-        String signeChangher;
+        String avantEgal = "";
+        String apresEgal = "";
+        String signeChanger;
         i = affichageTextField.getText().indexOf('=');
         for (int j = 0; j <= i; j++) {
             avantEgal += affichageTextField.getText().charAt(j);
         }
-        for (int k = i; k < affichageTextField.getText().length(); k++) {
+        for (int k = i+1; k < affichageTextField.getText().length(); k++) {
             apresEgal += affichageTextField.getText().charAt(k);
         }
-        if (apresEgal.charAt(0) != '-') {
-            apresEgal.substring(0);
-            signeChangher = "-" + apresEgal;
+        if (apresEgal.charAt(0) != '-' && apresEgal.charAt(0) != '+'){
+            signeChanger = "-" + apresEgal;
+        } else if (apresEgal.charAt(0) != '-') {
+            apresEgal = apresEgal.substring(1);
+            signeChanger = "-" + apresEgal;
         } else {
-            apresEgal.substring(0);
-            signeChangher = "+" + apresEgal;
+            apresEgal = apresEgal.substring(1);
+            signeChanger = "+" + apresEgal;
         }
-        affichageTextField.setText(avantEgal + signeChangher);
+        affichageTextField.setText(avantEgal + signeChanger);
     }
 
     @FXML
     void effacerDernierCaractere(ActionEvent event) {
-        affichageTextField.getText().substring(0,affichageTextField.getText().length() -1);
+        if (affichageTextField.getText().length() >0) affichageTextField.setText(affichageTextField.getText().substring(0,affichageTextField.getText().length() -1));
     }
 
     @FXML
