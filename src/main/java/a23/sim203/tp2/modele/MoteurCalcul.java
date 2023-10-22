@@ -13,6 +13,7 @@ public class MoteurCalcul {
     Map<Equation, Set<String>> referencesMap;
     Set<Constant> variablesSet;
 
+    Equation equation;
 
 
 
@@ -45,7 +46,7 @@ public class MoteurCalcul {
         String nomEquation = nouvelleEquation.substring(0, indexEquals);
         String expression = nouvelleEquation.substring(indexEquals + 1);
         try {
-            Equation equation = new Equation(nomEquation, expression);
+            equation = new Equation(nomEquation, expression);
             equationsHashSet.add(equation);
             referencesMap.put(equation, new HashSet<>());
 
@@ -125,4 +126,14 @@ public class MoteurCalcul {
         System.out.println("e2="+e2.calculate());
 
     }
+
+    /**
+     *
+     * @return l'équation
+     */
+    public Equation getEquation() {
+        return equation;
+    }
+
+
 }

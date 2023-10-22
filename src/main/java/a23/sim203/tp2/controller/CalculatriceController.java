@@ -1,15 +1,32 @@
 package a23.sim203.tp2.controller;
 
+import a23.sim203.tp2.cell.EquationListCell;
+import a23.sim203.tp2.modele.Equation;
 import a23.sim203.tp2.modele.MoteurCalcul;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.fxml.LoadListener;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 
-public class CalculatriceController {
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+/**
+ * Class qui permet de controler les composant du fichier Calculatrice.Fxml
+ */
+public class CalculatriceController implements Initializable {
     /**
      * Instancie une variable de la classe MoteurCalcul
      */
@@ -104,7 +121,7 @@ public class CalculatriceController {
      * Crée un ListeViews qui contiendra les équation
      */
     @FXML
-    private ListView<?> equationsListViews;
+    private ListView<Equation> equationsListViews;
     /**
      * Crée Une Vbox contenant equationLabel equationListViews et equationHbox
      */
@@ -210,7 +227,7 @@ public class CalculatriceController {
      * Crée une ListViews contenant les variables
      */
     @FXML
-    private ListView<?> variablesListViews;
+    private ListView<Equation> variablesListViews;
     /**
      * Crée la Vbox contenant variableLabel, variablesListViews et variablesHbox
      */
@@ -221,72 +238,90 @@ public class CalculatriceController {
      */
     @FXML
     private Button zeroButton;
+
     /**
      * Ajouter le caractère '+' a la fin de la String du Textfield
+     *
      * @param event
      */
     @FXML
     void ajoutajouterCaracterePlus(ActionEvent event) {
         affichageTextField.setText(affichageTextField.getText() + "+");
     }
+
     /**
      * Ajouter le caractère/chiffre '1' a la fin de la String du Textfield
+     *
      * @param event
      */
     @FXML
     void ajouterCaractere1(ActionEvent event) {
         affichageTextField.setText(affichageTextField.getText() + "1");
     }
+
     /**
      * Ajouter le caractère/chiffre '2' a la fin de la String du Textfield
+     *
      * @param event
      */
     @FXML
     void ajouterCaractere2(ActionEvent event) {
         affichageTextField.setText(affichageTextField.getText() + "2");
     }
+
     /**
      * Ajouter le caractère/chiffre '3' a la fin de la String du Textfield
+     *
      * @param event
      */
     @FXML
     void ajouterCaractere3(ActionEvent event) {
         affichageTextField.setText(affichageTextField.getText() + "3");
     }
+
     /**
      * Ajouter le caractère/chiffre '4' a la fin de la String du Textfield
+     *
      * @param event
      */
     @FXML
     void ajouterCaractere4(ActionEvent event) {
         affichageTextField.setText(affichageTextField.getText() + "4");
     }
+
     /**
      * Ajouter le caractère/chiffre '5' a la fin de la String du Textfield
+     *
      * @param event
      */
     @FXML
     void ajouterCaractere5(ActionEvent event) {
         affichageTextField.setText(affichageTextField.getText() + "5");
     }
+
     /**
      * Ajouter le caractère/chiffre '6' a la fin de la String du Textfield
+     *
      * @param event
      */
     @FXML
     void ajouterCaractere6(ActionEvent event) {
         affichageTextField.setText(affichageTextField.getText() + "6");
     }
+
     /**
      * Ajouter le caractère/chiffre '7' a la fin de la String du Textfield
+     *
      * @param event
      */
     @FXML
     void ajouterCaractere7(ActionEvent event) {
         affichageTextField.setText(affichageTextField.getText() + "7");
     }
+
     /**
      * Ajouter le caractère/chiffre '8' a la fin de la String du Textfield
+     *
      * @param event
      */
     @FXML
@@ -298,8 +333,10 @@ public class CalculatriceController {
     void ajouterCaractere9(ActionEvent event) {
         affichageTextField.setText(affichageTextField.getText() + "9");
     }
+
     /**
      * Ajouter le caractère '/' a la fin de la String du Textfield
+     *
      * @param event
      */
     @FXML
@@ -311,18 +348,18 @@ public class CalculatriceController {
      * Calcule la formule du TextField et toutes ses variables
      * Si le moteur de calcule ne peut pas effectuer le calcul, il retourne "NaN" et la méthode montre un dialog
      * Si le calcule est possible le contenue du TextField est remplacé par la réponse double convertie en String
+     *
      * @param event
      */
     @FXML
     void ajouterCaractereEgal(ActionEvent event) {
         double reponseCalcule = moteurCalcul.calcule(affichageTextField.getText());
-        //todo ajouter le calcul dans les list
-        if(String.valueOf(reponseCalcule).equals("NaN")){
+        if (String.valueOf(reponseCalcule).equals("NaN")) {
             Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
             dialog.setTitle("Calculateur Avancé");
             dialog.setHeaderText("Expression Invalide");
             dialog.setContentText("L'expression saisie ne peut être calculée");
-        }else{
+        } else {
             affichageTextField.setText(String.valueOf(reponseCalcule));
         }
 
@@ -338,46 +375,57 @@ public class CalculatriceController {
 
     /**
      * Ajouter le caractère '*' a la fin de la String du Textfield
+     *
      * @param event
      */
     @FXML
     void ajouterCaractereFois(ActionEvent event) {
         affichageTextField.setText(affichageTextField.getText() + "*");
     }
+
     /**
      * Ajouter le caractère '-' a la fin de la String du Textfield
+     *
      * @param event
      */
     @FXML
     void ajouterCaractereMoin(ActionEvent event) {
         affichageTextField.setText(affichageTextField.getText() + "-");
     }
+
     /**
      * Ajouter le caractère/chiffre '0' a la fin de la String du Textfield
+     *
      * @param event
      */
     @FXML
     void ajouterCaractereZero(ActionEvent event) {
         affichageTextField.setText(affichageTextField.getText() + "0");
     }
+
     /**
      * Ajouter le caractère '(' a la fin de la String du Textfield
+     *
      * @param event
      */
     @FXML
     void ajouterParentheseDroite(ActionEvent event) {
         affichageTextField.setText(affichageTextField.getText() + "(");
     }
+
     /**
      * Ajouter le caractère ')' a la fin de la String du Textfield
+     *
      * @param event
      */
     @FXML
     void ajouterParentheseGauche(ActionEvent event) {
         affichageTextField.setText(affichageTextField.getText() + ")");
     }
+
     /**
      * Ajouter le caractère ',' a la fin de la String du Textfield
+     *
      * @param event
      */
     @FXML
@@ -418,15 +466,181 @@ public class CalculatriceController {
         affichageTextField.setText(avantEgal + signeChanger);
     }
 
+    /**
+     * Efface le dernier caractere de affichageTextFields
+     * @param event
+     */
     @FXML
     void effacerDernierCaractere(ActionEvent event) {
         if (!affichageTextField.getText().isEmpty())
             affichageTextField.setText(affichageTextField.getText().substring(0, affichageTextField.getText().length() - 1));
     }
 
+    /**
+     * Efface tout les caratere de affichageTextFields
+     * @param event
+     */
     @FXML
     void effacerToutLesCaractere(ActionEvent event) {
         affichageTextField.setText("");
+    }
+
+    /**
+     * Ajoute l'équation de affichageTextField dans equatioListView en passant par moteurcalcul qui retourne
+     * les parametre nécessaire pour une équation
+     * la variablesListViews sera refres pour ajouter les varibales nécessaire
+     * @param event
+     */
+    @FXML
+    void ajouterUneEquation(ActionEvent event) {
+        Equation equation;
+        moteurCalcul.ajouteEquation(affichageTextField.getText());
+        equation = moteurCalcul.getEquation();
+
+        equationsListViews.getItems().add(equation);
+        variablesListViews.refresh();
+    }
+
+    private void creerVariableListView() {
+//        variablesListViews.setCellFactory(new Callback<ListView<Equation>, ListCell<Equation>>() {
+//            @Override
+//            public ListCell<Equation> call(ListView<Equation> param) {
+//                try {
+//                    return new EquationListCell();
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//        });
+    }
+
+    /**
+     * Défini ce qui sera dans equationlistView ici une equation
+     */
+    private void creerEquationListView() {
+        equationsListViews.setCellFactory(new Callback<ListView<Equation>, ListCell<Equation>>() {
+            @Override
+            public ListCell<Equation> call(ListView<Equation> param) {
+                try {
+                    return new EquationListCell();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+    }
+
+    /**
+     * Supprime l'équation selectionner de  equationlistView et ses variables dans varibalesListViews
+     * la variablesListViews sera refres pour ajouter les varibales nécessaire
+     * @param event
+     */
+    @FXML
+    void supprimerEquationSelectionner(ActionEvent event) {
+//        int i;
+//        i = equationsListViews.getSelectionModel().getSelectedIndex();
+        equationsListViews.getItems().remove(equationsListViews.getSelectionModel().getSelectedItem());
+
+//        equationsListViews.refresh();
+        variablesListViews.refresh();
+    }
+
+    @FXML
+    void LireOuEcrire(ActionEvent event) {
+
+    }
+
+    /**
+     *
+     * @param event
+     */
+    @FXML
+    void VariableOuValeur(ActionEvent event) {
+
+    }
+
+    /**
+     * crée le dialog avec les infos sur les auteurs et le cours
+     * @param event
+     */
+    @FXML
+    void actionnerAPropos(ActionEvent event) {
+        Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
+        dialog.setTitle("Calculateur avancé");
+        dialog.setHeaderText("Sim 203");
+        dialog.setContentText("Cours de programamtion 203 en SIM" + "\n" + "Cégep Limoilou A23" + "\n" + "par: Gabriel lebel et Alexis Miron");
+        dialog.showAndWait();
+    }
+
+    /**
+     * Crée les evenement dézoomer et zoomer qui zoom ou dézoome des boutons selon la position de la souris et grace a des
+     * EventHandler et la méthode ajouteGestionnaireEvenement
+     * @param event
+     */
+    @FXML
+    void actionnerAssitanceVisuelle(ActionEvent event) {
+        EventHandler<MouseEvent> zoomer = (MouseEvent e) -> {
+            ((Node) e.getTarget()).setScaleX(1.5);
+            ((Node) e.getTarget()).setScaleY(1.5);
+        };
+        EventHandler<MouseEvent> dezoomer = (MouseEvent e) -> {
+            ((Node) e.getTarget()).setScaleX(1.0);
+            ((Node) e.getTarget()).setScaleY(1.0);
+        };
+        ajouteGestionnaireEvenement(zoomer,dezoomer ,MouseEvent.MOUSE_ENTERED_TARGET,MouseEvent.MOUSE_EXITED_TARGET,
+                unButton, deuxButton, troisButton, quatreButton, cinqButton, sixButton, septButton,
+                huitButton, neufButton, changementDeSigneButton, retierButton, retierToutButton, egalButton,
+                zeroButton, diviserButton, additionnerButton, soustractionButton, foisButton, pointButton,
+                parentheseDroiteButton, parenthèseGaucheButton);
+
+
+    }
+
+    /**
+     *Ajoute les évenement sur des cibles choisi selon le type d'évenement
+     * @param handler premier  évenement a faire
+     * @param handler2 deuxième évenement a faire
+     * @param type premier type d'évenement
+     * @param type2 deuxième type d'évenement
+     * @param targets élement cibler par les évenement
+     */
+    private void ajouteGestionnaireEvenement(EventHandler handler,EventHandler handler2 ,EventType type,EventType type2, Button... targets) {
+        if (assistanceVisuelle.isSelected()) {
+            for (int i = 0; i < targets.length; i++) {
+                targets[i].addEventHandler(type, handler);
+                targets[i].addEventHandler(type2, handler2);
+            }
+        } else {
+            for (int i = 0; i < targets.length; i++) {
+                targets[i].removeEventHandler(type, handler);
+                targets[i].addEventHandler(type2, handler2);
+            }
+        }
+    }
+
+    /**
+     * Ajoute des donners de base dans les composant lors du lancement de l'application
+     * @param location
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resources
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        //todo enlever commentaire
+        creerEquationListView();
+        creerVariableListView();
+        Equation equation1 = new Equation("sin0","sin(x0)");
+        Equation equation2 = new Equation("cos0","cos(x0)");
+        Equation equation3 = new Equation("inverse0","1/x0");
+        Equation equation4 = new Equation("exp0","x0^e0");
+        Equation equation5 = new Equation("linear0","a0*x0+b0");
+        equationsListViews.getItems().addAll(equation1,equation2,equation3,equation4,equation5);
+        affichageTextField.setText("affichage");
     }
 }
 
