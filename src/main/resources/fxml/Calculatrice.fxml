@@ -9,6 +9,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -40,8 +41,8 @@
             <ListView fx:id="variablesListViews" prefHeight="253.0" prefWidth="216.0" />
             <HBox fx:id="variablesHbox" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="lireEtEcrireButton" mnemonicParsing="false" onAction="#LireOuEcrire" prefHeight="25.0" prefWidth="125.0" text="lire" />
-                  <Button fx:id="variableEtValeurButton" mnemonicParsing="false" onAction="#VariableOuValeur" prefHeight="25.0" prefWidth="125.0" text="variable" />
+                  <ToggleButton fx:id="lireEtEcrireToggleButton" maxWidth="125.0" mnemonicParsing="false" onAction="#lireOuEcrire" prefHeight="25.0" prefWidth="125.0" text="Lire" />
+                  <ToggleButton fx:id="variableOuValeurToggleButton" maxWidth="125.0" mnemonicParsing="false" onAction="#variableOuValeur" prefHeight="25.0" prefWidth="125.0" text="variable" textAlignment="CENTER" />
                </children>
                <padding>
                   <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
@@ -95,7 +96,7 @@
             <Button fx:id="soustractionButton" mnemonicParsing="false" onAction="#ajouterCaractereMoin" prefHeight="50.0" prefWidth="300.0" text="-" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="3" />
             <Button fx:id="unButton" mnemonicParsing="false" onAction="#ajouterCaractere1" prefHeight="50.0" prefWidth="300.0" text="1" GridPane.rowIndex="5" />
             <Button fx:id="deuxButton" mnemonicParsing="false" onAction="#ajouterCaractere2" prefHeight="50.0" prefWidth="300.0" text="2" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Button fx:id="egalButton" mnemonicParsing="false" onAction="#ajouterCaractereEgal" prefHeight="73.0" prefWidth="154.0" text="=" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="5" GridPane.rowSpan="2" />
+            <Button fx:id="egalButton" mnemonicParsing="false" onAction="#calculerEquation" prefHeight="73.0" prefWidth="154.0" text="=" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="5" GridPane.rowSpan="2" />
             <Button fx:id="additionnerButton" mnemonicParsing="false" onAction="#ajoutajouterCaracterePlus" prefHeight="50.0" prefWidth="300.0" text="+" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="4" />
             <Button fx:id="parentheseDroiteButton" mnemonicParsing="false" onAction="#ajouterParentheseGauche" prefHeight="50.0" prefWidth="300.0" text=")" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Button fx:id="changementDeSigneButton" mnemonicParsing="false" onAction="#changerLeSigne" prefHeight="50.0" prefWidth="300.0" text="+/-" GridPane.columnIndex="2" GridPane.rowIndex="2" />

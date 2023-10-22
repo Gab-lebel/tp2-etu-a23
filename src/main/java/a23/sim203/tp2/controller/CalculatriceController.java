@@ -4,12 +4,10 @@ import a23.sim203.tp2.cell.EquationListCell;
 import a23.sim203.tp2.modele.Equation;
 import a23.sim203.tp2.modele.MoteurCalcul;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.fxml.LoadListener;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -138,10 +136,10 @@ public class CalculatriceController implements Initializable {
     @FXML
     private Button huitButton;
     /**
-     * Crée le bouton "lire"/"écrire" dans VariablesHbox
+     * Crée le ToggleButton "lire"/"écrire" dans VariablesHbox
      */
     @FXML
-    private Button lireEtEcrireButton;
+    private ToggleButton lireEtEcrireToggleButton;
     /**
      * Crée le bouton sur la calculatrice répresentant '9'
      */
@@ -208,11 +206,12 @@ public class CalculatriceController implements Initializable {
     @FXML
     private Button unButton;
     /**
-     * Crée le bouton "Variable"/"Valeur"
+     * Crée le ToggleButton "Variable"/"Valeur"
      */
 
     @FXML
-    private Button variableEtValeurButton;
+    private ToggleButton variableOuValeurToggleButton;
+
     /**
      * Crée une Hbox contenant les boutons lire/écrire et variable/valeur
      */
@@ -227,7 +226,7 @@ public class CalculatriceController implements Initializable {
      * Crée une ListViews contenant les variables
      */
     @FXML
-    private ListView<Equation> variablesListViews;
+    private ListView<MoteurCalcul> variablesListViews;
     /**
      * Crée la Vbox contenant variableLabel, variablesListViews et variablesHbox
      */
@@ -352,25 +351,18 @@ public class CalculatriceController implements Initializable {
      * @param event
      */
     @FXML
-    void ajouterCaractereEgal(ActionEvent event) {
+    void calculerEquation(ActionEvent event) {
         double reponseCalcule = moteurCalcul.calcule(affichageTextField.getText());
         if (String.valueOf(reponseCalcule).equals("NaN")) {
             Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
             dialog.setTitle("Calculateur Avancé");
             dialog.setHeaderText("Expression Invalide");
             dialog.setContentText("L'expression saisie ne peut être calculée");
+            dialog.showAndWait();
         } else {
             affichageTextField.setText(String.valueOf(reponseCalcule));
         }
 
-//test
-//        if (affichageTextField.getText().equals("NaN")) {
-//            Alert dialog = new Alert(Alert.AlertType.WARNING);
-//            dialog.setTitle("Calculateur a vancé");
-//            dialog.setHeaderText("Expression Invalide");
-//            dialog.setContentText("L'expression saisie ne peut être calculée");
-//            dialog.showAndWait();
-//        }
     }
 
     /**
@@ -468,6 +460,7 @@ public class CalculatriceController implements Initializable {
 
     /**
      * Efface le dernier caractere de affichageTextFields
+     *
      * @param event
      */
     @FXML
@@ -478,6 +471,7 @@ public class CalculatriceController implements Initializable {
 
     /**
      * Efface tout les caratere de affichageTextFields
+     *
      * @param event
      */
     @FXML
@@ -489,6 +483,7 @@ public class CalculatriceController implements Initializable {
      * Ajoute l'équation de affichageTextField dans equatioListView en passant par moteurcalcul qui retourne
      * les parametre nécessaire pour une équation
      * la variablesListViews sera refres pour ajouter les varibales nécessaire
+     *
      * @param event
      */
     @FXML
@@ -502,14 +497,11 @@ public class CalculatriceController implements Initializable {
     }
 
     private void creerVariableListView() {
-//        variablesListViews.setCellFactory(new Callback<ListView<Equation>, ListCell<Equation>>() {
+        //todo crée la vrai listCel, celle-ci servait pour tester
+//        variablesListViews.setCellFactory(new Callback<ListView<MoteurCalcul>, ListCell<MoteurCalcul>>() {
 //            @Override
-//            public ListCell<Equation> call(ListView<Equation> param) {
-//                try {
-//                    return new EquationListCell();
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
+//            public ListCell<MoteurCalcul> call(ListView<MoteurCalcul> param) {
+//                return new MoteurCalculListCell();
 //            }
 //        });
     }
@@ -534,6 +526,7 @@ public class CalculatriceController implements Initializable {
     /**
      * Supprime l'équation selectionner de  equationlistView et ses variables dans varibalesListViews
      * la variablesListViews sera refres pour ajouter les varibales nécessaire
+     *
      * @param event
      */
     @FXML
@@ -546,22 +539,9 @@ public class CalculatriceController implements Initializable {
         variablesListViews.refresh();
     }
 
-    @FXML
-    void LireOuEcrire(ActionEvent event) {
-
-    }
-
-    /**
-     *
-     * @param event
-     */
-    @FXML
-    void VariableOuValeur(ActionEvent event) {
-
-    }
-
     /**
      * crée le dialog avec les infos sur les auteurs et le cours
+     *
      * @param event
      */
     @FXML
@@ -576,6 +556,7 @@ public class CalculatriceController implements Initializable {
     /**
      * Crée les evenement dézoomer et zoomer qui zoom ou dézoome des boutons selon la position de la souris et grace a des
      * EventHandler et la méthode ajouteGestionnaireEvenement
+     *
      * @param event
      */
     @FXML
@@ -588,7 +569,7 @@ public class CalculatriceController implements Initializable {
             ((Node) e.getTarget()).setScaleX(1.0);
             ((Node) e.getTarget()).setScaleY(1.0);
         };
-        ajouteGestionnaireEvenement(zoomer,dezoomer ,MouseEvent.MOUSE_ENTERED_TARGET,MouseEvent.MOUSE_EXITED_TARGET,
+        ajouteGestionnaireEvenementAssistanceVisuelle(zoomer, dezoomer, MouseEvent.MOUSE_ENTERED_TARGET, MouseEvent.MOUSE_EXITED_TARGET,
                 unButton, deuxButton, troisButton, quatreButton, cinqButton, sixButton, septButton,
                 huitButton, neufButton, changementDeSigneButton, retierButton, retierToutButton, egalButton,
                 zeroButton, diviserButton, additionnerButton, soustractionButton, foisButton, pointButton,
@@ -598,14 +579,15 @@ public class CalculatriceController implements Initializable {
     }
 
     /**
-     *Ajoute les évenement sur des cibles choisi selon le type d'évenement
-     * @param handler premier  évenement a faire
+     * Ajoute les évenement sur des cibles choisi selon le type d'évenement
+     *
+     * @param handler  premier  évenement a faire
      * @param handler2 deuxième évenement a faire
-     * @param type premier type d'évenement
-     * @param type2 deuxième type d'évenement
-     * @param targets élement cibler par les évenement
+     * @param type     premier type d'évenement
+     * @param type2    deuxième type d'évenement
+     * @param targets  élement cibler par les évenement
      */
-    private void ajouteGestionnaireEvenement(EventHandler handler,EventHandler handler2 ,EventType type,EventType type2, Button... targets) {
+    private void ajouteGestionnaireEvenementAssistanceVisuelle(EventHandler handler, EventHandler handler2, EventType type, EventType type2, Button... targets) {
         if (assistanceVisuelle.isSelected()) {
             for (int i = 0; i < targets.length; i++) {
                 targets[i].addEventHandler(type, handler);
@@ -614,33 +596,84 @@ public class CalculatriceController implements Initializable {
         } else {
             for (int i = 0; i < targets.length; i++) {
                 targets[i].removeEventHandler(type, handler);
-                targets[i].addEventHandler(type2, handler2);
             }
+        }
+
+    }
+
+
+    void ajouterVariable() {
+        //todo finir ce que le bouton écrire doit faire et les commentaire
+        EventHandler<MouseEvent> event = (MouseEvent e) -> {
+            if (e.getClickCount() == 2){
+                variablesListViews.getSelectionModel().getSelectedItem();
+                if (lireEtEcrireToggleButton.isSelected()){
+                    affichageTextField.getText();
+                }else {
+                    if (variableOuValeurToggleButton.isSelected()){
+//                        affichageTextField.setText(affichageTextField.getText() + ); la valeur de la variable
+                    }else {
+//                        affichageTextField.setText(affichageTextField.getText() + ); le nom de la variable
+                    }
+                }
+            }
+        };
+        variablesListViews.addEventHandler(MouseEvent.MOUSE_PRESSED,event);
+
+    }
+
+    /**
+     * change le nom du bouton selon si il est sélectionner ou pas
+     * le nom de base est Lire et l'autre est écrire
+     * si écire est activer le bouton variable/valeur est désactiver
+     * @param event
+     */
+    @FXML
+    void lireOuEcrire(ActionEvent event) {
+        if (lireEtEcrireToggleButton.isSelected()) {
+            lireEtEcrireToggleButton.setText("écrire");
+            variableOuValeurToggleButton.setDisable(true);
+        }else{
+            lireEtEcrireToggleButton.setText("lire");
+            variableOuValeurToggleButton.setDisable(false);
+        }
+    }
+
+    /**
+     * change le nom du bouton selon s'il est sélectionner ou pas
+     * le nom de base est varibale et l'autre est valeur
+     * @param event
+     */
+    @FXML
+    void variableOuValeur(ActionEvent event) {
+        if (variableOuValeurToggleButton.isSelected()) {
+            variableOuValeurToggleButton.setText("valeur");
+        }else {
+            variableOuValeurToggleButton.setText("variable");
         }
     }
 
     /**
      * Ajoute des donners de base dans les composant lors du lancement de l'application
-     * @param location
-     * The location used to resolve relative paths for the root object, or
-     * {@code null} if the location is not known.
      *
-     * @param resources
-     * The resources used to localize the root object, or {@code null} if
-     * the root object was not localized.
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  {@code null} if the location is not known.
+     * @param resources The resources used to localize the root object, or {@code null} if
+     *                  the root object was not localized.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //todo enlever commentaire
         creerEquationListView();
         creerVariableListView();
-        Equation equation1 = new Equation("sin0","sin(x0)");
-        Equation equation2 = new Equation("cos0","cos(x0)");
-        Equation equation3 = new Equation("inverse0","1/x0");
-        Equation equation4 = new Equation("exp0","x0^e0");
-        Equation equation5 = new Equation("linear0","a0*x0+b0");
-        equationsListViews.getItems().addAll(equation1,equation2,equation3,equation4,equation5);
+        ajouterVariable();
+        Equation equation1 = new Equation("sin0", "sin(x0)");
+        Equation equation2 = new Equation("cos0", "cos(x0)");
+        Equation equation3 = new Equation("inverse0", "1/x0");
+        Equation equation4 = new Equation("exp0", "x0^e0");
+        Equation equation5 = new Equation("linear0", "a0*x0+b0");
+        equationsListViews.getItems().addAll(equation1, equation2, equation3, equation4, equation5);
         affichageTextField.setText("affichage");
+        variablesListViews.getItems().addAll(moteurCalcul);
     }
 }
 
