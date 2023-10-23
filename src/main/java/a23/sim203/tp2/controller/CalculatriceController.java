@@ -226,7 +226,7 @@ public class CalculatriceController implements Initializable {
      * Crée une ListViews contenant les variables
      */
     @FXML
-    private ListView<MoteurCalcul> variablesListViews;
+    private ListView<String> variablesListViews;
     /**
      * Crée la Vbox contenant variableLabel, variablesListViews et variablesHbox
      */
@@ -496,15 +496,6 @@ public class CalculatriceController implements Initializable {
         variablesListViews.refresh();
     }
 
-    private void creerVariableListView() {
-        //todo crée la vrai listCel, celle-ci servait pour tester
-//        variablesListViews.setCellFactory(new Callback<ListView<MoteurCalcul>, ListCell<MoteurCalcul>>() {
-//            @Override
-//            public ListCell<MoteurCalcul> call(ListView<MoteurCalcul> param) {
-//                return new MoteurCalculListCell();
-//            }
-//        });
-    }
 
     /**
      * Défini ce qui sera dans equationlistView ici une equation
@@ -605,13 +596,14 @@ public class CalculatriceController implements Initializable {
     void ajouterVariable() {
         //todo finir ce que le bouton écrire doit faire et les commentaire
         EventHandler<MouseEvent> event = (MouseEvent e) -> {
+            String ligneVariableListViews;
             if (e.getClickCount() == 2){
-                variablesListViews.getSelectionModel().getSelectedItem();
+                ligneVariableListViews = variablesListViews.getSelectionModel().getSelectedItem();
                 if (lireEtEcrireToggleButton.isSelected()){
                     affichageTextField.getText();
                 }else {
                     if (variableOuValeurToggleButton.isSelected()){
-//                        affichageTextField.setText(affichageTextField.getText() + ); la valeur de la variable
+                        affichageTextField.setText(affichageTextField.getText() + ligneVariableListViews); //la valeur de la variable
                     }else {
 //                        affichageTextField.setText(affichageTextField.getText() + ); le nom de la variable
                     }
@@ -664,7 +656,6 @@ public class CalculatriceController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         creerEquationListView();
-        creerVariableListView();
         ajouterVariable();
         Equation equation1 = new Equation("sin0", "sin(x0)");
         Equation equation2 = new Equation("cos0", "cos(x0)");
@@ -673,7 +664,7 @@ public class CalculatriceController implements Initializable {
         Equation equation5 = new Equation("linear0", "a0*x0+b0");
         equationsListViews.getItems().addAll(equation1, equation2, equation3, equation4, equation5);
         affichageTextField.setText("affichage");
-        variablesListViews.getItems().addAll(moteurCalcul);
+//        variablesListViews.getItems().addAll();
     }
 }
 
