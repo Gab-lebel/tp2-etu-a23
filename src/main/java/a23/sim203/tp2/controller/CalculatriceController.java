@@ -1,6 +1,4 @@
 package a23.sim203.tp2.controller;
-
-import a23.sim203.tp2.cell.EquationListCell;
 import a23.sim203.tp2.modele.Equation;
 import a23.sim203.tp2.modele.MoteurCalcul;
 import javafx.event.ActionEvent;
@@ -119,7 +117,7 @@ public class CalculatriceController implements Initializable {
      * Crée un ListeViews qui contiendra les équation
      */
     @FXML
-    private ListView<Equation> equationsListViews;
+    private ListView<String> equationsListViews;
     /**
      * Crée Une Vbox contenant equationLabel equationListViews et equationHbox
      */
@@ -492,27 +490,10 @@ public class CalculatriceController implements Initializable {
         moteurCalcul.ajouteEquation(affichageTextField.getText());
         equation = moteurCalcul.getEquation();
 
-        equationsListViews.getItems().add(equation);
+        equationsListViews.getItems().addAll(equation.getNom() + "=" +  equation.getExpression() + " élément requis : " + equation.getElementsRequis());
         variablesListViews.refresh();
     }
 
-
-    /**
-     * Défini ce qui sera dans equationlistView ici une equation
-     */
-    private void creerEquationListView() {
-        equationsListViews.setCellFactory(new Callback<ListView<Equation>, ListCell<Equation>>() {
-            @Override
-            public ListCell<Equation> call(ListView<Equation> param) {
-                try {
-                    return new EquationListCell();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-    }
 
     /**
      * Supprime l'équation selectionner de  equationlistView et ses variables dans varibalesListViews
@@ -655,14 +636,19 @@ public class CalculatriceController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        creerEquationListView();
         ajouterVariable();
+
         Equation equation1 = new Equation("sin0", "sin(x0)");
         Equation equation2 = new Equation("cos0", "cos(x0)");
         Equation equation3 = new Equation("inverse0", "1/x0");
         Equation equation4 = new Equation("exp0", "x0^e0");
         Equation equation5 = new Equation("linear0", "a0*x0+b0");
-        equationsListViews.getItems().addAll(equation1, equation2, equation3, equation4, equation5);
+        Equation[] equations = {equation1,equation2,equation3,equation4,equation5};
+        for (int i = 0; i < equations.length; i++) {
+            equationsListViews.getItems().add(equations[i].getNom() +"="+ equations[i].getExpression() +
+                    " éléments requis : " + equations[i].getElementsRequis());
+        }
+
         affichageTextField.setText("affichage");
 //        variablesListViews.getItems().addAll();
     }
