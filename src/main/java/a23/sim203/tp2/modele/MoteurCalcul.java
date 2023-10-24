@@ -13,7 +13,9 @@ public class MoteurCalcul {
 
     Equation equation;
 
-
+    /**
+     * Constructeur de la classe MoteurCalcul
+     */
     public MoteurCalcul() {
         License.iConfirmNonCommercialUse("Cegep Limoilou");
 
@@ -21,24 +23,28 @@ public class MoteurCalcul {
         equationMap = new HashMap<>();
     }
 
-
-    private Set<String> determineToutesVariablesRequises() {
-        Set<String> stringSet = new HashSet<>();
-        for (Equation equation : getToutesLesEquations()) {
-            stringSet.addAll(equation.getElementsRequis());
-        }
-        return stringSet;
-    }
-
+    /**
+     * Ajoute une variable au moteur de calcul
+     * @param variable nom de la variable
+     * @param valeur valeur de la variable
+     */
     private void ajouteVariable(String variable, double valeur) {
         variablesHashMap.put(variable, new Constant(variable, valeur));
     }
 
+    /**
+     * Assigne une valeur à une variable dans le moteur de calcul.
+     * @param nomVariable nom de la variable à réassigner
+     * @param valeur valeur à assigner
+     */
     public void setValeurVariable(String nomVariable, double valeur) {
         variablesHashMap.replace(nomVariable, new Constant(nomVariable, valeur));
     }
 
-
+    /**
+     * Ajoute une équation au moteur de calcul. Affiche une erreur si elle ne réfère à rien ou se réfère à elle-même.
+     * @param nouvelleEquation équation à ajouter au moteur
+     */
     public void ajouteEquation(String nouvelleEquation) {
         int indexEquals = nouvelleEquation.indexOf('=');
         String nomEquation = nouvelleEquation.substring(0, indexEquals);
@@ -52,7 +58,7 @@ public class MoteurCalcul {
                 variablesHashMap.remove(nomEquation); //enlever variable du meme nom si elle existe
                 equationMap.put(nomEquation, equation);
                 for (String element : equation.getElementsRequis()) {
-                    addVariableIfNotExistant(element);
+                    addVariableIfNonExistent(element);
                 }
                 circularDependencyCheck(nomEquation);
             }
@@ -66,12 +72,20 @@ public class MoteurCalcul {
         }
     }
 
-    private void addVariableIfNotExistant(String nomVariable) {
+    /**
+     * Ajoute une variable dans la Map appropriée si une variable avec le nom reçu en argument n'existe pas
+     * @param nomVariable nom de la variable à ajouter
+     */
+    private void addVariableIfNonExistent(String nomVariable) {
         if (!getToutesLesVariables().contains(nomVariable)) {
             variablesHashMap.put(nomVariable, new Constant(nomVariable, Double.NaN));
         }
     }
 
+    /**
+     * Efface l'équation et affiche une alerte si elle a une dépendance circulaire
+     * @param nomEquation nom de l'équation à vérifier
+     */
     private void circularDependencyCheck(String nomEquation) {
         if (hasCircularDependency(nomEquation)) {
             effaceEquation(nomEquation);
@@ -79,11 +93,19 @@ public class MoteurCalcul {
         }
     }
 
+    /**
+     * Vérifie si une expression est valide, c-à-d qu'elle requiert au moins un élément
+     * @param equation équation dont l'expression est à vérifier
+     * @return true si l'expression est valide
+     */
     private boolean isExpressionValid(Equation equation) {
         return equation.getElementsRequis().size() != 0;
     }
 
-
+    /**
+     * Efface une équation du moteur de calcul
+     * @param nomEquation nom de l'équation à effacer
+     */
     public void effaceEquation(String nomEquation) {
         Equation equationToBeDeleted = getEquationFromString(nomEquation);
         if (isEquationReferredTo(nomEquation)) {
@@ -103,7 +125,7 @@ public class MoteurCalcul {
     }
 
     /**
-     * Itère dans la Map de références pour vérifier si la variable est utilisée par une équation autre que celle indiquée
+     * Itère dans la Map de références pour vérifier si la variable est utilisée par une équation autre que celle en argument
      *
      * @param element       variable dont on vérifie les références
      * @param ignoredString équation dont on ignore les références
@@ -123,31 +145,29 @@ public class MoteurCalcul {
         return false;
     }
 
+    /**
+     * Itère dans la Map de références pour vérifier si la variable est utilisée par une équation autre que celle en argument
+     *
+     * @param nomEquation équation dont on vérifie les références
+     */
     private boolean isEquationReferredTo(String nomEquation) {
         return isElementReferredTo(nomEquation, nomEquation);
     }
 
-//    private void replaceEquationByVariable(Equation equation) {
-//        Iterator<Equation> iterator = referencesMap.keySet().iterator();
-//        Equation currentEquation;
-//        ajouteVariable(equation.getNom(), calcule(equation));
-//        boolean equationWasReplaced = false;
-//
-//        while (iterator.hasNext()) {
-//            currentEquation = iterator.next();
-//            if (currentEquation != equation) {
-//                if (currentEquation.getElementsRequis().remove(equation.getNom())) {
-//                    currentEquation.getElementsRequis().add()
-//                    equationWasReplaced = true;
-//                }
-//            }
-//        }
-//    }
-
+    /**
+     * Calcule la valeur de l'équation
+     * @param nomEquation nom de l'équation à calculer
+     * @return valeur de l'équation
+     */
     public double calcule(String nomEquation) {
-        return calcule(getEquationFromString(nomEquation)); // à changer
+        return calcule(getEquationFromString(nomEquation));
     }
 
+    /**
+     * Calcule la valeur de l'équation
+     * @param equation équation à calculer
+     * @return valeur de l'équation
+     */
     public double calcule(Equation equation) {
         Set<String> elementsRequis = equation.getElementsRequis();
         Constant[] tableauConstant = new Constant[elementsRequis.size()];
@@ -162,13 +182,20 @@ public class MoteurCalcul {
         }
         Expression expression = new Expression(equation.getExpression(), tableauConstant);
         return expression.calculate();
-
     }
 
-    public Collection<String> getToutesLesVariables() {
+    /**
+     * Retourne un set avec toutes les variables
+     * @return set avec les variables
+     */
+    public Set<String> getToutesLesVariables() {
         return variablesHashMap.keySet();
     }
 
+    /**
+     * Retourne toutes les équations dans un set
+     * @return set avec toutes les équations
+     */
     public Set<Equation> getToutesLesEquations() {
         Set<Equation> equationSet = new HashSet<>();
         for (String s :
@@ -178,10 +205,20 @@ public class MoteurCalcul {
         return equationSet;
     }
 
+    /**
+     * Vérifie si l'équation en argument a une dépendance circulaire
+     * @param nomEquation nom de l'équation à vérifier
+     * @return true si l'équation se réfère à elle même
+     */
     private boolean hasCircularDependency(String nomEquation) {
         return hasCircularDependencyInternal(new HashSet<>(), nomEquation);
     }
 
+    /**
+     * Vérifie si l'équation en argument a une dépendance circulaire
+     * @param parentReferences parents dans l'arbre des références
+     * @return true si l'élément se réfère à lui-même
+     */
     private boolean hasCircularDependencyInternal(HashSet<String> parentReferences, String currentElement) {
         if (parentReferences.contains(currentElement)) {
             return true;
@@ -200,27 +237,43 @@ public class MoteurCalcul {
         return false;
     }
 
+    /**
+     * Vérifie si le nom en argument réfère à une équation dans le moteur
+     * @param nomEquation nom à vérifier
+     * @return true si l'équation existe dans le moteur
+     */
     private boolean isEquation(String nomEquation) {
         return equationMap.containsKey(nomEquation);
     }
 
+    /**
+     * Vérifie si le nom en argument réfère à une variable dans le moteur
+     * @param nomVariable nom à vérifier
+     * @return true si l'équation existe dans le moteur
+     */
     private boolean isVariable(String nomVariable) {
         return variablesHashMap.containsKey(nomVariable);
     }
 
-
+    /**
+     * Retourne la map de variables
+     * @return map de variables
+     */
     public Map<String, Constant> getVariableValueMap() {
-
-        return variablesHashMap; // à changer
-
+        return variablesHashMap;
     }
 
+    /**
+     * Retourne la map d'équations
+     * @return map d'équations
+     */
     public Map<String, Equation> getEquationMap() {
-
-        return equationMap; // à changer
-
+        return equationMap;
     }
 
+    /**
+     * Affiche une alerte qui indique que l'équation entrée est invalide
+     */
     private void showAlertEquationNonValide() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setContentText("Équation non valide");
@@ -245,6 +298,11 @@ public class MoteurCalcul {
 
     }
 
+    /**
+     * Trouve l'équation associée au nom en argument
+     * @param nomEquation nom de l'équation
+     * @return équation
+     */
     private Equation getEquationFromString(String nomEquation) {
         return equationMap.get(nomEquation);
     }
