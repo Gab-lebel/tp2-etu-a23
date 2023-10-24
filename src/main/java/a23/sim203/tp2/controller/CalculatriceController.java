@@ -17,6 +17,7 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 /**
@@ -350,7 +351,11 @@ public class CalculatriceController implements Initializable {
      */
     @FXML
     void calculerEquation(ActionEvent event) {
-        double reponseCalcule = moteurCalcul.calcule(affichageTextField.getText());
+        Equation equation;
+        if (affichageTextField.getText().indexOf('=') == -1){
+            moteurCalcul.ajouteEquation("z9" + "=" + affichageTextField.getText());
+        }
+        double reponseCalcule = moteurCalcul.calcule(moteurCalcul.getEquation());
         if (String.valueOf(reponseCalcule).equals("NaN")) {
             Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
             dialog.setTitle("Calculateur Avancé");
@@ -487,10 +492,18 @@ public class CalculatriceController implements Initializable {
     @FXML
     void ajouterUneEquation(ActionEvent event) {
         Equation equation;
+
         moteurCalcul.ajouteEquation(affichageTextField.getText());
         equation = moteurCalcul.getEquation();
 
         equationsListViews.getItems().addAll(equation.getNom() + "=" +  equation.getExpression() + " élément requis : " + equation.getElementsRequis());
+        Iterator<String> iterator = moteurCalcul.getToutesLesVariables().iterator();
+        String nomVariable;
+        while (iterator.hasNext()){
+            nomVariable = iterator.next();
+            variablesListViews.getItems().add(nomVariable + "=" + moteurCalcul.getVariableValueMap().get(nomVariable).getConstantValue());
+        }
+
         variablesListViews.refresh();
     }
 
@@ -508,6 +521,7 @@ public class CalculatriceController implements Initializable {
         equationsListViews.getItems().remove(equationsListViews.getSelectionModel().getSelectedItem());
 
 //        equationsListViews.refresh();
+        variablesListViews.getItems().remove(equationsListViews.getSelectionModel().getSelectedItem());
         variablesListViews.refresh();
     }
 
