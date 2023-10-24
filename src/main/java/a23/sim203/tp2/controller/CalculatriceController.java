@@ -497,12 +497,15 @@ public class CalculatriceController implements Initializable {
         equation = moteurCalcul.getEquation();
 
         equationsListViews.getItems().addAll(equation.getNom() + "=" +  equation.getExpression() + " élément requis : " + equation.getElementsRequis());
+<<<<<<< Updated upstream
         Iterator<String> iterator = moteurCalcul.getToutesLesVariables().iterator();
         String nomVariable;
         while (iterator.hasNext()){
             nomVariable = iterator.next();
             variablesListViews.getItems().add(nomVariable + "=" + moteurCalcul.getVariableValueMap().get(nomVariable).getConstantValue());
         }
+=======
+>>>>>>> Stashed changes
 
         variablesListViews.refresh();
     }
