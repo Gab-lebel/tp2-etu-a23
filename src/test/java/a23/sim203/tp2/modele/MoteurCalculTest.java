@@ -6,8 +6,7 @@ import org.mariuszgromada.math.mxparser.Constant;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MoteurCalculTest {
 
@@ -133,6 +132,22 @@ class MoteurCalculTest {
         moteurCalcul.setValeurVariable("g77", 5);
         double resultat = moteurCalcul.calcule("a0");
         assertEquals(36, resultat);
+    }
+
+    @Test
+    public void testTrouverUneElementDansUneEquation() {
+        moteurCalcul.ajouteEquation("a0=x0+9+b9");
+        assertEquals("b9",moteurCalcul.findElementReferredTo("b9","a0=x0+9").substring(1,3));
+        assertThrows(NullPointerException.class, () ->moteurCalcul.findElementReferredTo("c9","a0=x0+9").substring(1,3));
+    }
+
+    @Test
+    public void testCalculPythagore() {
+        moteurCalcul.ajouteEquation("a0=√(b0^2+c0^2)");;
+        moteurCalcul.setValeurVariable("b0", 3);
+        moteurCalcul.setValeurVariable("c0", 4);
+        double resultat = moteurCalcul.calcule("a0");
+        assertEquals(5.0, resultat);
     }
 
 }

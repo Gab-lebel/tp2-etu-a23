@@ -8,10 +8,22 @@ import java.util.*;
 public class MoteurCalcul {
 
     // ajoutez les attributs pour stocker les équations et les variables
+    /**
+     * Crée un map contenat une String en clé et une Constant en valeur
+     */
     Map<String, Constant> variablesHashMap;
+    /**
+     * Crée un map contenat une String en clé et une Equation en valeur
+     */
     Map<String, Equation> equationMap;
-
+    /**
+     * Crée un variable de type Equation
+     */
     Equation equation;
+    /**
+     * Crée une viable de type DialogueUtil
+     */
+    DialoguesUtil dialoguesUtil = new DialoguesUtil();
 
     /**
      * Constructeur de la classe MoteurCalcul
@@ -65,7 +77,7 @@ public class MoteurCalcul {
 
         } catch (RuntimeException e) {
             if (Objects.equals(e.getMessage(), "Mauvais nom")) {
-                showAlertEquationNonValide();
+                dialoguesUtil.showAlertEquationNonValide();
             } else {
                 throw e;
             }
@@ -89,7 +101,7 @@ public class MoteurCalcul {
     private void circularDependencyCheck(String nomEquation) {
         if (hasCircularDependency(nomEquation)) {
             effaceEquation(nomEquation);
-            showAlertEquationNonValide();
+            dialoguesUtil.showAlertEquationNonValide();
         }
     }
 
@@ -130,7 +142,7 @@ public class MoteurCalcul {
      * @param element       variable dont on vérifie les références
      * @param ignoredString équation dont on ignore les références
      */
-    private boolean isElementReferredTo(String element, String ignoredString) {
+    public boolean isElementReferredTo(String element, String ignoredString) {
         Iterator<String> iterator = equationMap.keySet().iterator();
         String currentEquation;
 
@@ -147,10 +159,30 @@ public class MoteurCalcul {
 
     /**
      * Itère dans la Map de références pour vérifier si la variable est utilisée par une équation autre que celle en argument
+     * @param element       variable dont on vérifie les références
+     * @param ignoredString équation dont on ignore les références
+     * @return l'élement qui est recherché
+     */
+    public String findElementReferredTo(String element, String ignoredString) {
+        Iterator<String> iterator = equationMap.keySet().iterator();
+        String currentEquation;
+
+        while (iterator.hasNext()) {
+            currentEquation = iterator.next();
+            if (!currentEquation.equals(ignoredString)) {
+                if (equationMap.get(currentEquation).getElementsRequis().contains(element))
+                    return String.valueOf(equationMap.get(currentEquation).getElementsRequis());
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Itère dans la Map de références pour vérifier si la variable est utilisée par une équation autre que celle en argument
      *
      * @param nomEquation équation dont on vérifie les références
      */
-    private boolean isEquationReferredTo(String nomEquation) {
+    public boolean isEquationReferredTo(String nomEquation) {
         return isElementReferredTo(nomEquation, nomEquation);
     }
 
@@ -271,14 +303,6 @@ public class MoteurCalcul {
         return equationMap;
     }
 
-    /**
-     * Affiche une alerte qui indique que l'équation entrée est invalide
-     */
-    private void showAlertEquationNonValide() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setContentText("Équation non valide");
-        alert.setTitle("Calculateur avancé");
-    }
 
     public static void main(String[] args) {
 

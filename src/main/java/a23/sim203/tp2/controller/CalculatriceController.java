@@ -1,4 +1,6 @@
 package a23.sim203.tp2.controller;
+
+import a23.sim203.tp2.modele.DialoguesUtil;
 import a23.sim203.tp2.modele.Equation;
 import a23.sim203.tp2.modele.MoteurCalcul;
 import javafx.event.ActionEvent;
@@ -6,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -13,9 +16,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.ResourceBundle;
@@ -236,6 +237,10 @@ public class CalculatriceController implements Initializable {
      */
     @FXML
     private Button zeroButton;
+    /**
+     * crée une variable de type DialogueUtil
+     */
+    DialoguesUtil dialoguesUtil = new DialoguesUtil();
 
     /**
      * Ajouter le caractère '+' a la fin de la String du Textfield
@@ -352,21 +357,19 @@ public class CalculatriceController implements Initializable {
     @FXML
     void calculerEquation(ActionEvent event) {
         Equation equation;
-        if (affichageTextField.getText().indexOf('=') == -1){
-            moteurCalcul.ajouteEquation("z9" + "=" + affichageTextField.getText());
+        if (affichageTextField.getText().indexOf('=') == -1) {
+            ajouterUneEquationIncomplete(affichageTextField.getText());
         }
+        moteurCalcul.ajouteEquation(affichageTextField.getText());
         double reponseCalcule = moteurCalcul.calcule(moteurCalcul.getEquation());
         if (String.valueOf(reponseCalcule).equals("NaN")) {
-            Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
-            dialog.setTitle("Calculateur Avancé");
-            dialog.setHeaderText("Expression Invalide");
-            dialog.setContentText("L'expression saisie ne peut être calculée");
-            dialog.showAndWait();
+            dialoguesUtil.showExpressionInvalide();
         } else {
             affichageTextField.setText(String.valueOf(reponseCalcule));
         }
 
     }
+
 
     /**
      * Ajouter le caractère '*' a la fin de la String du Textfield
@@ -492,39 +495,51 @@ public class CalculatriceController implements Initializable {
     @FXML
     void ajouterUneEquation(ActionEvent event) {
         Equation equation;
+        String variableReferer;
+        int indexEgal = affichageTextField.getText().indexOf('=');
+        if (indexEgal == -1) {
+            dialoguesUtil.showAlertEquationNonValide();
+        } else {
+            moteurCalcul.ajouteEquation(affichageTextField.getText());
+            equation = moteurCalcul.getEquation();
 
-        moteurCalcul.ajouteEquation(affichageTextField.getText());
-        equation = moteurCalcul.getEquation();
+            if (moteurCalcul.isEquationReferredTo(affichageTextField.getText().substring(0, indexEgal))) {
+                variableReferer = moteurCalcul.findElementReferredTo(affichageTextField.getText().substring(0, indexEgal),
+                        affichageTextField.getText()).substring(1, 3);
+                variablesListViews.getItems().remove(variableReferer + "=NaN");
+            }
+            equationsListViews.getItems().addAll(equation.getNom() + "=" + equation.getExpression() + " élément requis : " + equation.getElementsRequis());
 
-        equationsListViews.getItems().addAll(equation.getNom() + "=" +  equation.getExpression() + " élément requis : " + equation.getElementsRequis());
-<<<<<<< Updated upstream
-        Iterator<String> iterator = moteurCalcul.getToutesLesVariables().iterator();
-        String nomVariable;
-        while (iterator.hasNext()){
-            nomVariable = iterator.next();
-            variablesListViews.getItems().add(nomVariable + "=" + moteurCalcul.getVariableValueMap().get(nomVariable).getConstantValue());
+            Iterator<String> iterator = moteurCalcul.getToutesLesVariables().iterator();
+            String nomVariable;
+            while (iterator.hasNext()) {
+                nomVariable = iterator.next();
+                variablesListViews.getItems().add(nomVariable + "=" + moteurCalcul.getVariableValueMap().
+                        get(nomVariable).getConstantValue());
+            }
+            variablesListViews.refresh();
         }
-=======
->>>>>>> Stashed changes
-
-        variablesListViews.refresh();
     }
 
 
     /**
-     * Supprime l'équation selectionner de  equationlistView et ses variables dans varibalesListViews
-     * la variablesListViews sera refres pour ajouter les varibales nécessaire
+     * Supprime l'équation selectionner de  equationlistView et ses variables dans variablesListViews
+     * la variablesListViews sera refresh pour mettre a jour l'affichage
      *
      * @param event
      */
     @FXML
     void supprimerEquationSelectionner(ActionEvent event) {
-//        int i;
-//        i = equationsListViews.getSelectionModel().getSelectedIndex();
+        String equationSelectionner = equationsListViews.getSelectionModel().getSelectedItem();
+        int indexEgal = equationSelectionner.indexOf('=');
         equationsListViews.getItems().remove(equationsListViews.getSelectionModel().getSelectedItem());
-
-//        equationsListViews.refresh();
-        variablesListViews.getItems().remove(equationsListViews.getSelectionModel().getSelectedItem());
+        moteurCalcul.effaceEquation(equationSelectionner.substring(0, indexEgal));
+        for (int i = 0; i < variablesListViews.getItems().size(); i++) {
+            if (!moteurCalcul.isEquationReferredTo(variablesListViews.getItems().get(i).substring(0, 2))) {
+                variablesListViews.getItems().remove(i);
+                i--;
+            }
+        }
         variablesListViews.refresh();
     }
 
@@ -535,11 +550,7 @@ public class CalculatriceController implements Initializable {
      */
     @FXML
     void actionnerAPropos(ActionEvent event) {
-        Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
-        dialog.setTitle("Calculateur avancé");
-        dialog.setHeaderText("Sim 203");
-        dialog.setContentText("Cours de programamtion 203 en SIM" + "\n" + "Cégep Limoilou A23" + "\n" + "par: Gabriel lebel et Alexis Miron");
-        dialog.showAndWait();
+        dialoguesUtil.showAPropos();
     }
 
     /**
@@ -590,32 +601,42 @@ public class CalculatriceController implements Initializable {
 
     }
 
-
-    void ajouterVariable() {
-        //todo finir ce que le bouton écrire doit faire et les commentaire
+    /**
+     * Gère l'evenement lors du doubleclick sur variableListVIews
+     * L'évenement va lire la valeur ou la variable selon l'option choisi
+     * Si l'option choisi est d'écrire il définira une valeur a une variable qui vient du TextField
+     */
+    void ajouterEvenementBoutonsLireEcrireVariableValeur() {
         EventHandler<MouseEvent> event = (MouseEvent e) -> {
-            String ligneVariableListViews;
-            if (e.getClickCount() == 2){
-                ligneVariableListViews = variablesListViews.getSelectionModel().getSelectedItem();
-                if (lireEtEcrireToggleButton.isSelected()){
-                    affichageTextField.getText();
-                }else {
-                    if (variableOuValeurToggleButton.isSelected()){
-                        affichageTextField.setText(affichageTextField.getText() + ligneVariableListViews); //la valeur de la variable
-                    }else {
-//                        affichageTextField.setText(affichageTextField.getText() + ); le nom de la variable
+            String nomVariable;
+            String valeur;
+            int indexItemSelectionner = variablesListViews.getSelectionModel().getSelectedIndex();
+            int indexCaractereEgal = variablesListViews.getItems().get(indexItemSelectionner).indexOf('=');
+            if (e.getClickCount() == 2) {
+                ajouterUneEquationIncomplete(affichageTextField.getText());
+                valeur = String.valueOf(moteurCalcul.calcule(moteurCalcul.getEquation()));
+                nomVariable = variablesListViews.getItems().get(indexItemSelectionner).substring(0, indexCaractereEgal);
+                if (lireEtEcrireToggleButton.isSelected()) {
+                    variablesListViews.getItems().remove(indexItemSelectionner);
+                    variablesListViews.getItems().add(indexItemSelectionner, nomVariable + "=" + valeur);
+                } else {
+                    if (variableOuValeurToggleButton.isSelected()) {
+                        affichageTextField.setText(affichageTextField.getText() +
+                                variablesListViews.getItems().get(indexItemSelectionner).substring(indexCaractereEgal + 1));
+                    } else {
+                        affichageTextField.setText(affichageTextField.getText() + nomVariable);
                     }
                 }
             }
         };
-        variablesListViews.addEventHandler(MouseEvent.MOUSE_PRESSED,event);
-
+        variablesListViews.addEventHandler(MouseEvent.MOUSE_PRESSED, event);
     }
 
     /**
      * change le nom du bouton selon si il est sélectionner ou pas
      * le nom de base est Lire et l'autre est écrire
      * si écire est activer le bouton variable/valeur est désactiver
+     *
      * @param event
      */
     @FXML
@@ -623,7 +644,7 @@ public class CalculatriceController implements Initializable {
         if (lireEtEcrireToggleButton.isSelected()) {
             lireEtEcrireToggleButton.setText("écrire");
             variableOuValeurToggleButton.setDisable(true);
-        }else{
+        } else {
             lireEtEcrireToggleButton.setText("lire");
             variableOuValeurToggleButton.setDisable(false);
         }
@@ -632,15 +653,36 @@ public class CalculatriceController implements Initializable {
     /**
      * change le nom du bouton selon s'il est sélectionner ou pas
      * le nom de base est varibale et l'autre est valeur
+     *
      * @param event
      */
     @FXML
     void variableOuValeur(ActionEvent event) {
         if (variableOuValeurToggleButton.isSelected()) {
             variableOuValeurToggleButton.setText("valeur");
-        }else {
+        } else {
             variableOuValeurToggleButton.setText("variable");
         }
+    }
+
+    /**
+     * Transforme une String qui n'est pas egal a une variable, la retourne égal a une variable soit une equation
+     *
+     * @param equationNonFinie la string qui est égal a rien
+     * @return une equation de variable z9 créer avec la string en parametre
+     */
+
+    private String tansformerUneStringEnEquation(String equationNonFinie) {
+        return "z9=" + equationNonFinie;
+    }
+
+    /**
+     * ajoute la string transformer en equation dans moteurCalcul
+     *
+     * @param equationNonFinie la string a transformer
+     */
+    private void ajouterUneEquationIncomplete(String equationNonFinie) {
+        moteurCalcul.ajouteEquation(tansformerUneStringEnEquation(equationNonFinie));
     }
 
     /**
@@ -653,21 +695,21 @@ public class CalculatriceController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ajouterVariable();
-
+        ajouterEvenementBoutonsLireEcrireVariableValeur();
+        affichageTextField.setAlignment(Pos.CENTER);
         Equation equation1 = new Equation("sin0", "sin(x0)");
         Equation equation2 = new Equation("cos0", "cos(x0)");
         Equation equation3 = new Equation("inverse0", "1/x0");
         Equation equation4 = new Equation("exp0", "x0^e0");
         Equation equation5 = new Equation("linear0", "a0*x0+b0");
-        Equation[] equations = {equation1,equation2,equation3,equation4,equation5};
+        Equation[] equations = {equation1, equation2, equation3, equation4, equation5};
         for (int i = 0; i < equations.length; i++) {
-            equationsListViews.getItems().add(equations[i].getNom() +"="+ equations[i].getExpression() +
+            moteurCalcul.ajouteEquation(equations[i].getNom() + "=" + equations[i].getExpression());
+            equationsListViews.getItems().add(equations[i].getNom() + "=" + equations[i].getExpression() +
                     " éléments requis : " + equations[i].getElementsRequis());
         }
-
         affichageTextField.setText("affichage");
-//        variablesListViews.getItems().addAll();
+        variablesListViews.getItems().addAll("x0=NaN", "e0=NaN", "a0=NaN", "b0=NaN");
     }
 }
 

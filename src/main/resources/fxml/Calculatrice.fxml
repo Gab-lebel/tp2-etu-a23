@@ -35,10 +35,10 @@
       </MenuBar>
    </top>
    <right>
-      <VBox fx:id="variablesVbox" prefHeight="233.0" prefWidth="216.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="variablesVbox" maxWidth="3000.0" prefHeight="233.0" prefWidth="216.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="variablesLabel" alignment="CENTER" prefHeight="17.0" prefWidth="228.0" text="Variables" />
-            <ListView fx:id="variablesListViews" prefHeight="253.0" prefWidth="216.0" />
+            <Label fx:id="variablesLabel" alignment="CENTER" maxWidth="3000.0" prefHeight="17.0" prefWidth="228.0" text="Variables" />
+            <ListView fx:id="variablesListViews" maxWidth="3000.0" prefHeight="253.0" prefWidth="216.0" />
             <HBox fx:id="variablesHbox" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <ToggleButton fx:id="lireEtEcrireToggleButton" maxWidth="125.0" mnemonicParsing="false" onAction="#lireOuEcrire" prefHeight="25.0" prefWidth="125.0" text="Lire" />
@@ -69,7 +69,7 @@
       </VBox>
    </bottom>
    <center>
-      <GridPane fx:id="calculatricegridPane" hgap="3.0" prefHeight="175.0" prefWidth="344.0" style="-fx-background-color: lightgrey;" vgap="3.0" BorderPane.alignment="CENTER">
+      <GridPane fx:id="calculatricegridPane" hgap="3.0" maxWidth="550.0" prefHeight="175.0" prefWidth="344.0" style="-fx-background-color: lightgrey;" vgap="3.0" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -87,28 +87,28 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="parenthèseGaucheButton" mnemonicParsing="false" onAction="#ajouterParentheseDroite" prefHeight="50.0" prefWidth="300.0" text="(" GridPane.rowIndex="2" />
-            <Button fx:id="troisButton" mnemonicParsing="false" onAction="#ajouterCaractere3" prefHeight="50.0" prefWidth="300.0" text="3" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <Button fx:id="retierButton" alignment="CENTER" mnemonicParsing="false" onAction="#effacerDernierCaractere" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: orange;" text="&lt;-" GridPane.columnIndex="3" />
-            <Button fx:id="retierToutButton" mnemonicParsing="false" onAction="#effacerToutLesCaractere" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: brown;" text="X" GridPane.columnIndex="4" />
-            <Button fx:id="diviserButton" mnemonicParsing="false" onAction="#ajouterCaractereDiviser" prefHeight="50.0" prefWidth="300.0" text="/" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-            <Button fx:id="foisButton" mnemonicParsing="false" onAction="#ajouterCaractereFois" prefHeight="50.0" prefWidth="300.0" text="*" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-            <Button fx:id="soustractionButton" mnemonicParsing="false" onAction="#ajouterCaractereMoin" prefHeight="50.0" prefWidth="300.0" text="-" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-            <Button fx:id="unButton" mnemonicParsing="false" onAction="#ajouterCaractere1" prefHeight="50.0" prefWidth="300.0" text="1" GridPane.rowIndex="5" />
-            <Button fx:id="deuxButton" mnemonicParsing="false" onAction="#ajouterCaractere2" prefHeight="50.0" prefWidth="300.0" text="2" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Button fx:id="egalButton" mnemonicParsing="false" onAction="#calculerEquation" prefHeight="73.0" prefWidth="154.0" text="=" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="5" GridPane.rowSpan="2" />
-            <Button fx:id="additionnerButton" mnemonicParsing="false" onAction="#ajoutajouterCaracterePlus" prefHeight="50.0" prefWidth="300.0" text="+" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-            <Button fx:id="parentheseDroiteButton" mnemonicParsing="false" onAction="#ajouterParentheseGauche" prefHeight="50.0" prefWidth="300.0" text=")" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button fx:id="changementDeSigneButton" mnemonicParsing="false" onAction="#changerLeSigne" prefHeight="50.0" prefWidth="300.0" text="+/-" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Button fx:id="septButton" mnemonicParsing="false" onAction="#ajouterCaractere7" prefHeight="50.0" prefWidth="300.0" text="7" GridPane.rowIndex="3" />
-            <Button fx:id="huitButton" mnemonicParsing="false" onAction="#ajouterCaractere8" prefHeight="50.0" prefWidth="300.0" text="8" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Button fx:id="neufButton" mnemonicParsing="false" onAction="#ajouterCaractere9" prefHeight="50.0" prefWidth="300.0" text="9" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Button fx:id="quatreButton" mnemonicParsing="false" onAction="#ajouterCaractere4" prefHeight="50.0" prefWidth="300.0" text="4" GridPane.rowIndex="4" />
-            <Button fx:id="cinqButton" mnemonicParsing="false" onAction="#ajouterCaractere5" prefHeight="50.0" prefWidth="300.0" text="5" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Button fx:id="sixButton" mnemonicParsing="false" onAction="#ajouterCaractere6" prefHeight="50.0" prefWidth="300.0" text="6" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <Button fx:id="zeroButton" mnemonicParsing="false" onAction="#ajouterCaractereZero" prefHeight="59.0" prefWidth="153.0" text="0" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-            <Button fx:id="pointButton" mnemonicParsing="false" onAction="#ajouterUneVirgule" prefHeight="50.0" prefWidth="300.0" text="." GridPane.columnIndex="2" GridPane.rowIndex="6" />
-            <TextField fx:id="affichageTextField" prefHeight="67.0" prefWidth="230.0" style="-fx-background-color: black;" GridPane.columnSpan="3" GridPane.rowSpan="2" />
+            <Button fx:id="parenthèseGaucheButton" maxHeight="100.0" maxWidth="125.0" mnemonicParsing="false" onAction="#ajouterParentheseDroite" prefHeight="50.0" prefWidth="300.0" text="(" GridPane.rowIndex="2" />
+            <Button fx:id="troisButton" maxHeight="100.0" maxWidth="125.0" mnemonicParsing="false" onAction="#ajouterCaractere3" prefHeight="50.0" prefWidth="300.0" text="3" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Button fx:id="retierButton" alignment="CENTER" maxHeight="100.0" maxWidth="125.0" mnemonicParsing="false" onAction="#effacerDernierCaractere" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: orange;" text="&lt;-" GridPane.columnIndex="3" />
+            <Button fx:id="retierToutButton" maxHeight="100.0" maxWidth="125.0" mnemonicParsing="false" onAction="#effacerToutLesCaractere" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: brown;" text="X" GridPane.columnIndex="4" />
+            <Button fx:id="diviserButton" maxHeight="100.0" maxWidth="250.0" mnemonicParsing="false" onAction="#ajouterCaractereDiviser" prefHeight="50.0" prefWidth="300.0" text="/" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+            <Button fx:id="foisButton" maxHeight="100.0" maxWidth="250.0" mnemonicParsing="false" onAction="#ajouterCaractereFois" prefHeight="50.0" prefWidth="300.0" text="*" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+            <Button fx:id="soustractionButton" maxHeight="100.0" maxWidth="250.0" mnemonicParsing="false" onAction="#ajouterCaractereMoin" prefHeight="50.0" prefWidth="300.0" text="-" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+            <Button fx:id="unButton" maxHeight="100.0" maxWidth="125.0" mnemonicParsing="false" onAction="#ajouterCaractere1" prefHeight="50.0" prefWidth="300.0" text="1" GridPane.rowIndex="5" />
+            <Button fx:id="deuxButton" maxHeight="100.0" maxWidth="125.0" mnemonicParsing="false" onAction="#ajouterCaractere2" prefHeight="50.0" prefWidth="300.0" text="2" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Button fx:id="egalButton" maxHeight="200.0" maxWidth="250.0" mnemonicParsing="false" onAction="#calculerEquation" prefHeight="73.0" prefWidth="154.0" text="=" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="5" GridPane.rowSpan="2" />
+            <Button fx:id="additionnerButton" maxHeight="100.0" maxWidth="250.0" mnemonicParsing="false" onAction="#ajoutajouterCaracterePlus" prefHeight="50.0" prefWidth="300.0" text="+" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+            <Button fx:id="parentheseDroiteButton" maxHeight="100.0" maxWidth="125.0" mnemonicParsing="false" onAction="#ajouterParentheseGauche" prefHeight="50.0" prefWidth="300.0" text=")" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="changementDeSigneButton" maxHeight="100.0" maxWidth="125.0" mnemonicParsing="false" onAction="#changerLeSigne" prefHeight="50.0" prefWidth="300.0" text="+/-" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Button fx:id="septButton" maxHeight="100.0" maxWidth="125.0" mnemonicParsing="false" onAction="#ajouterCaractere7" prefHeight="50.0" prefWidth="300.0" text="7" GridPane.rowIndex="3" />
+            <Button fx:id="huitButton" maxHeight="100.0" maxWidth="125.0" mnemonicParsing="false" onAction="#ajouterCaractere8" prefHeight="50.0" prefWidth="300.0" text="8" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Button fx:id="neufButton" maxHeight="100.0" maxWidth="125.0" mnemonicParsing="false" onAction="#ajouterCaractere9" prefHeight="50.0" prefWidth="300.0" text="9" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Button fx:id="quatreButton" maxHeight="100.0" maxWidth="125.0" mnemonicParsing="false" onAction="#ajouterCaractere4" prefHeight="50.0" prefWidth="300.0" text="4" GridPane.rowIndex="4" />
+            <Button fx:id="cinqButton" maxHeight="100.0" maxWidth="125.0" mnemonicParsing="false" onAction="#ajouterCaractere5" prefHeight="50.0" prefWidth="300.0" text="5" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Button fx:id="sixButton" maxHeight="100.0" maxWidth="125.0" mnemonicParsing="false" onAction="#ajouterCaractere6" prefHeight="50.0" prefWidth="300.0" text="6" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Button fx:id="zeroButton" maxHeight="100.0" maxWidth="250.0" mnemonicParsing="false" onAction="#ajouterCaractereZero" prefHeight="59.0" prefWidth="153.0" text="0" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+            <Button fx:id="pointButton" maxHeight="100.0" maxWidth="125.0" mnemonicParsing="false" onAction="#ajouterUneVirgule" prefHeight="50.0" prefWidth="300.0" text="." GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <TextField fx:id="affichageTextField" maxHeight="100.0" maxWidth="375.0" prefHeight="67.0" prefWidth="230.0" style="-fx-background-color: black;" GridPane.columnSpan="3" GridPane.rowSpan="2" />
          </children>
       </GridPane>
    </center>
