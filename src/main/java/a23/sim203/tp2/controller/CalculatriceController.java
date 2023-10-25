@@ -12,8 +12,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -30,22 +28,6 @@ public class CalculatriceController implements Initializable {
      */
     private MoteurCalcul moteurCalcul = new MoteurCalcul();
     /**
-     * Crée la racine du projet dans un BorderPane et GridpPane a gauche, variableVbox a droite,
-     * equationVbox en bas et MenuBar en haut
-     */
-    @FXML
-    private BorderPane BorderPane;
-    /**
-     * Crée une bar de Menu
-     */
-    @FXML
-    private MenuBar MenuBar;
-    /**
-     * Crée un MenuItem "A propos" dans le menu "Aide"
-     */
-    @FXML
-    private MenuItem aProposMenuItem;
-    /**
      * Crée le bouton sur la calculatrice répresentant '+'
      */
     @FXML
@@ -56,30 +38,10 @@ public class CalculatriceController implements Initializable {
     @FXML
     private TextField affichageTextField;
     /**
-     * Crée un menu "Aide" dans Menubar
-     */
-    @FXML
-    private Menu aideMenu;
-    /**
-     * Crée le bouton "ajoute" dans equationHbox
-     */
-    @FXML
-    private Button ajouteButton;
-    /**
-     * Crée un menue "Assistance" dans MenuBar
-     */
-    @FXML
-    private Menu assistanceMenu;
-    /**
      * Crée un menu appeler "Assistance visuelle" dans assistanceMenu
      */
     @FXML
     private CheckMenuItem assistanceVisuelle;
-    /**
-     * Crée le GridPane contenant tout les boutons nécessaire a la calculatrice et le TextField
-     */
-    @FXML
-    private GridPane calculatricegridPane;
     /**
      * Crée le bouton sur la calculatrice répresentant '+/-'
      */
@@ -106,25 +68,10 @@ public class CalculatriceController implements Initializable {
     @FXML
     private Button egalButton;
     /**
-     * Crée une Hbox contenant le bouton "ajoute" et "supprimer selection"
-     */
-    @FXML
-    private HBox equationHbox;
-    /**
-     * Crée un Label contenant "Équations"
-     */
-    @FXML
-    private Label equationLabel;
-    /**
      * Crée un ListeViews qui contiendra les équation
      */
     @FXML
     private ListView<String> equationsListViews;
-    /**
-     * Crée Une Vbox contenant equationLabel equationListViews et equationHbox
-     */
-    @FXML
-    private VBox equationsVbox;
     /**
      * Crée le bouton sur la calculatrice répresentant '*'
      */
@@ -243,7 +190,7 @@ public class CalculatriceController implements Initializable {
     DialoguesUtil dialoguesUtil = new DialoguesUtil();
 
     /**
-     * Ajouter le caractère '+' a la fin de la String du Textfield
+     * Ajouter le caractère '+' à la fin de la String du Textfield
      *
      * @param event
      */
@@ -253,7 +200,7 @@ public class CalculatriceController implements Initializable {
     }
 
     /**
-     * Ajouter le caractère/chiffre '1' a la fin de la String du Textfield
+     * Ajouter le caractère/chiffre '1' à la fin de la String du Textfield
      *
      * @param event
      */
@@ -263,7 +210,7 @@ public class CalculatriceController implements Initializable {
     }
 
     /**
-     * Ajouter le caractère/chiffre '2' a la fin de la String du Textfield
+     * Ajouter le caractère/chiffre '2' à la fin de la String du Textfield
      *
      * @param event
      */
@@ -273,7 +220,7 @@ public class CalculatriceController implements Initializable {
     }
 
     /**
-     * Ajouter le caractère/chiffre '3' a la fin de la String du Textfield
+     * Ajouter le caractère/chiffre '3' à la fin de la String du Textfield
      *
      * @param event
      */

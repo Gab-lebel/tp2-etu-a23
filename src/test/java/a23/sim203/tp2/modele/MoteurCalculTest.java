@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mariuszgromada.math.mxparser.Constant;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -134,20 +135,50 @@ class MoteurCalculTest {
         assertEquals(36, resultat);
     }
 
+    //Gabriel
     @Test
     public void testTrouverUneElementDansUneEquation() {
         moteurCalcul.ajouteEquation("a0=x0+9+b9");
         assertEquals("b9",moteurCalcul.findElementReferredTo("b9","a0=x0+9").substring(1,3));
         assertThrows(NullPointerException.class, () ->moteurCalcul.findElementReferredTo("c9","a0=x0+9").substring(1,3));
     }
-
+    //Gabriel
     @Test
     public void testCalculPythagore() {
-        moteurCalcul.ajouteEquation("a0=√(b0^2+c0^2)");;
+        moteurCalcul.ajouteEquation("a0=√(b0^2+c0^2)");
         moteurCalcul.setValeurVariable("b0", 3);
         moteurCalcul.setValeurVariable("c0", 4);
         double resultat = moteurCalcul.calcule("a0");
         assertEquals(5.0, resultat);
+    }
+
+    //Alexis
+    @Test
+    public void testGetToutesVariables() {
+        moteurCalcul.ajouteEquation("a0=3+b0");
+        moteurCalcul.ajouteEquation("a1=b1+b2+b3+b4+t6+27");
+
+        Set<String> expected = new HashSet<>();
+        expected.add("b0");
+        expected.add("b1");
+        expected.add("b2");
+        expected.add("b3");
+        expected.add("b4");
+        expected.add("b5");
+        expected.add("t6");
+
+        assertTrue(expected.containsAll(moteurCalcul.getToutesLesVariables()));
+    }
+    //Alexis
+    @Test
+    public void testChangementEquationAVariable() {
+        moteurCalcul.ajouteEquation("a0=1+a1");
+        moteurCalcul.ajouteEquation("a2=3+a1");
+        moteurCalcul.ajouteEquation("b0=a0+a2");
+        moteurCalcul.effaceEquation("a0");
+        moteurCalcul.effaceEquation("a2");
+        assertTrue(moteurCalcul.getToutesLesVariables().contains("a0"));
+        assertTrue(moteurCalcul.getToutesLesVariables().contains("a2"));
     }
 
 }

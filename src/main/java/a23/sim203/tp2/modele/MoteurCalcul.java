@@ -1,7 +1,8 @@
 package a23.sim203.tp2.modele;
 
-import javafx.scene.control.Alert;
-import org.mariuszgromada.math.mxparser.*;
+import org.mariuszgromada.math.mxparser.Constant;
+import org.mariuszgromada.math.mxparser.Expression;
+import org.mariuszgromada.math.mxparser.License;
 
 import java.util.*;
 
